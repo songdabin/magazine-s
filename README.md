@@ -11,3 +11,10 @@ login, mysql, heroku
 spring mvc project
 ## [Magazine-S](https://github.com/songdabin/magazine-s)
 mybatis, file upload
+
+## 웹 서비스 프로젝트 Week 4
+1. 쿼리문에서 다중 파라미터 사용
+    hashmap 사용
+2. mybatis
+3. file upload
+4. interceptor
