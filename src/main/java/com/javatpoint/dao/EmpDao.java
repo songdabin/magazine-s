@@ -1,45 +1,43 @@
 package com.javatpoint.dao;  
-import java.sql.ResultSet;  
-import java.sql.SQLException;  
+import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;  
-import org.springframework.jdbc.core.JdbcTemplate;  
-import org.springframework.jdbc.core.RowMapper;  
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.javatpoint.beans.Emp;  
-  
-public class EmpDao {  
-JdbcTemplate template;  
-  
-public void setTemplate(JdbcTemplate template) {  
-    this.template = template;  
-}  
-public int save(Emp p){  
-    String sql="insert into sdb_cart(user_id, mag, cnt) values('"+p.getUser_id()+"',"+p.getMag()+",'"+p.getCnt()+"')";  
-    return template.update(sql);  
-}  
-public int update(Emp p){  
-    String sql="update sdb_cart set mag=" + p.getMag() + ", cnt=" + p.getCnt() + " where user_id= '" + p.getUser_id() + "'";  
-    return template.update(sql);  
-}  
-public int delete(String user_id, int mag){  
-    String sql="delete from sdb_cart where user_id='" + user_id + "' and mag = " + mag + "";  
-    return template.update(sql);  
-}  
-public Emp getEmpById(String user_id) {
-    String sql="select * from sdb_cart where user_id=?";
-    return template.queryForObject(sql, new Object[]{user_id}, new BeanPropertyRowMapper<Emp>(Emp.class));
-}  
-public List<Emp> getEmployees(){  
-    return template.query("select * from sdb_cart", new RowMapper<Emp>(){  
-        public Emp mapRow(ResultSet rs, int row) throws SQLException {  
-            Emp e=new Emp();  
-            e.setUser_id(rs.getString(1));  
-            e.setMag(rs.getInt(2));  
-            e.setCnt(rs.getInt(3));  
-            return e;  
-        }  
-    });  
-}  
+
+@Repository
+public class EmpDao {
+	@Autowired
+	SqlSession sqlSession;
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	  
+	public int insertEmp(Emp p) {
+		int result = sqlSession.insert("Emp.insertEmp", p);
+		return result;
+	}
+	
+	public int updateEmp(Emp p){  
+	    int result = sqlSession.update("Emp.updateEmp", p);
+	    return result;
+	}
+	
+	public int deleteEmp(String user_id, int mag){
+		map.put("user_id", user_id);
+		map.put("mag", mag);
+	    int result = sqlSession.delete("Emp.deleteEmp", map);
+		return result;
+	}
+	
+	public Emp getEmpById(String user_id) {
+		Emp one = sqlSession.selectOne("Emp.getEmpById", user_id);
+		return one;
+	}  
+	public List<Emp> getEmployees(){  
+	    List<Emp> list = sqlSession.selectList("Emp.getEmployees");
+	    return list;
+	}  
 }  

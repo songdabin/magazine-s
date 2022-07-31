@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+	<insert id="insertUser">
+		insert into sdb_register (id, name, password, email, phonenumber) values
+		(#{id}, #{name}, #{password}, #{email}, #{phonenumber})
+	</insert>
+	<update id="updateUser">
+		update sdb_register
+		set name=#{name}, password=#{password}, email=#{email}, phonenumber=#{phonenumber} where id=#{id}
+	</update>
+	<delete id="deleteUser">
+		delete from sdb_register where id=#{id}
+	</delete>
+	<select id="getUserById" resultType="user">
+		select * from sdb_register where id=#{id}
+	</select>
+	<select id="getAllRecords" resultType="user">
+		select * from sdb_register
+	</select>
+	<select id="getUser" resultType="user">
+		select * from sdb_register
+		where id=#{id} and password=#{password}
+	</select>
+</mapper>

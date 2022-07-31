@@ -1,5 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>  
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>      
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
@@ -8,18 +9,16 @@ response.setContentType("text/html; charset=UTF-8");
 %>
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
 <head>
-  <meta charset="utf-8">
-  
-  <link rel="stylesheet" href="${path}/resources/CSS/style_login.css" type="text/css"></link>
-  <title>Magazine B</title>
+	<meta charset="UTF-8">
+	<title>Magazine B</title>
+	<link rel="stylesheet" href="${path}/resources/CSS/style_login.css"></link>
 </head>
-
 <body>
-  <div class="header">
+	<div class="header">
     <div class="logo">
-      <a href="home">
+      <a href="login-success">
         <img src="${path}/resources/img/header_logo.svg" class="logo">
       </a>
     </div>
@@ -34,49 +33,35 @@ response.setContentType("text/html; charset=UTF-8");
       </div>
       <div class="right-menu">
       <ul>
-        <li><a href="login">My Page</a></li>
+        <li><a href="login">MyPage</a></li>
         <li><a href="login">Login</a></li>
-        <li><a href="#" id="myBtn">Cart[0]</a></li>
-        <div class="global_logo" >
-          <img src="${path}/resources/img/icon_header_global_black.png" class="global_logo">
-        </div>
+        <li><a href="#">Cart[0]</a></li>
+        <div class="global_logo" ><img src="${path}/resources/img/icon_header_global_black.png" class="global_logo"></div>
         <li><a href="#">KR</a></li>
       </ul>
       </div>
     </div>
   </div>
   
-  <!-- Cart Modal -->
-  <div id="myModal" class="modal">
-    <div class="modal-header">
-      <span class="close">Close</span>
-      <h2>Cart</h2>
-    </div>
-    <div class="modal-body">
-      <p>장바구니가 비어 있습니다.</p>
-    </div>
-    <div class="modal-footer">
-      <h3><a href="editemp/${emp.user_id}">VIEW ALL</a></h3>
-    </div>
+  <div class="register">
+	<form action="../editadminsave" method="post">
+      <table class="register-form">
+		<tr><td class="row">아이디 *</td></tr>
+		<tr><td><input type="text" name="id"/></td></tr>  
+		<tr><td class="row">비밀번호 *</td></tr>
+		<tr><td><input type="password" name="password"/></td></tr>
+		<tr><td class="row">이름 *</td></tr>
+		<tr><td><input type="text" name="name"/></td></tr>  
+		<tr><td class="row">휴대전화</td></tr>
+		<tr><td><input type="text" name="phonenumber"/></td></tr>
+		<tr><td class="row">이메일 *</td></tr>
+		<tr><td><input type="email" name="email"/></td></tr>  
+		<tr><td><input class="reg_btn" type="submit" value="수정하기"/></td></tr>  
+		</table>
+	</form>
   </div>
   
-	<h1 class="cart-list-title">Cart List</h1>
-	<table class="cart-list">
-	<tr><th class="cart-th">아이디</th><th class="cart-th">상품번호</th><th class="cart-th">수량</th><th class="cart-th">수정</th><th class="cart-th">삭제</th></tr>
-	   <c:forEach var="emp" items="${list}"> 
-			<tr>
-			<td class="cart-list-td">${emp.user_id}</td>
-			<td class="cart-list-td">${emp.mag}</td>
-			<td class="cart-list-td">${emp.cnt}</td>
-			<td><a class="cart-td-link" href="editemp/${emp.user_id}">Edit</a></td>
-			<td><a class="cart-td-link" href="deleteemp/${emp.user_id}/${emp.mag}">Delete</a></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<br/>
-	<a class="cart-add" href="empform">Add to Cart</a>
-	
-	<footer id="footer">
+  <footer id="footer">
     <div class="footer">
       <div class="footer-logo">
         <img class="footer-width" src="${path}/resources/img/footer_logo.png">
@@ -115,9 +100,5 @@ response.setContentType("text/html; charset=UTF-8");
       </ul>
     </div>
   </footer>
-
-  <script type="text/javascript" src="${path}/resources/JS/slider.js"></script>
-  <script type="text/javascript" src="${path}/resources/JS/modal.js"></script>
 </body>
-  
 </html>

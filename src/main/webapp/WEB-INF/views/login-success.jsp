@@ -1,6 +1,5 @@
-<%@ page session="false" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <% request.setCharacterEncoding("utf-8");
 response.setContentType("text/html; charset=UTF-8");
@@ -11,7 +10,8 @@ response.setContentType("text/html; charset=UTF-8");
 <head>
   <meta charset="utf-8">
   
-  <link rel="stylesheet" href="${path}/resources/CSS/style.css" type="text/css"></link>
+  <!-- <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"> -->
+  <link rel="stylesheet" href="${path}/resources/CSS/style.css"></link>
   <title>Magazine B</title>
 </head>
 
@@ -31,8 +31,8 @@ response.setContentType("text/html; charset=UTF-8");
       </div>
       <div class="right-menu">
       <ul>
-        <li><a href="login">My Page</a></li>
-        <li><a href="login">Login</a></li>
+        <li><a href="mypage">My Page</a></li>
+        <li><a href="logout">Logout</a></li>
         <li><a href="#" id="myBtn">Cart[0]</a></li>
         <div class="global_logo" >
           <img src="${path}/resources/img/icon_header_global_white.png" class="global_logo">
@@ -53,12 +53,12 @@ response.setContentType("text/html; charset=UTF-8");
       <p>장바구니가 비어 있습니다.</p>
     </div>
     <div class="modal-footer">
-      <h3><a href="viewemp">VIEW ALL</a></h3>
+      <h3><a href="${path}/viewemp">VIEW ALL</a></h3>
     </div>
   </div>
 
   <!-- Slide -->
-  <!-- <div class="slide-container"> -->
+  <div class="slide-container">
     <!-- Slide 1 Ramyun -->
     <div class="slide slide-1 fade">
       <div class="text_area">
@@ -165,7 +165,7 @@ response.setContentType("text/html; charset=UTF-8");
       <span class="scrollbar"></span> 
     </div>
 
-  <!-- </div> -->
+  </div>
 
   <div class="shop">
     <div class="shop-title">
@@ -226,7 +226,7 @@ response.setContentType("text/html; charset=UTF-8");
     </div>
 
     <div class="shop-link">
-      <a href="#">
+      <a href="empform" >
         Shop&nbsp;
         <img src="https://magazine-b.co.kr/web/baton/images/home/icon_home_shop_arrow.svg">
       </a>

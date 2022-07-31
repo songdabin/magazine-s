@@ -1,25 +1,26 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.javatpoint.dao.UserDao, com.javatpoint.beans.User"%>  
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>  
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <% request.setCharacterEncoding("utf-8");
 response.setContentType("text/html; charset=UTF-8");
+User u = (User)request.getAttribute("command");
 %>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  
-  <link rel="stylesheet" href="${path}/resources/CSS/style_login.css" type="text/css"></link>
+  <link rel="stylesheet" href="${path}/resources/CSS/style_login.css"></link>
   <title>Magazine B</title>
 </head>
 
-<body>
+<body>  
   <div class="header">
     <div class="logo">
-      <a href="home">
+      <a href="login-success">
         <img src="${path}/resources/img/header_logo.svg" class="logo">
       </a>
     </div>
@@ -34,12 +35,10 @@ response.setContentType("text/html; charset=UTF-8");
       </div>
       <div class="right-menu">
       <ul>
-        <li><a href="login">My Page</a></li>
-        <li><a href="login">Login</a></li>
+        <li><a href="mypage">My Page</a></li>
+        <li><a href="logout">Logout</a></li>
         <li><a href="#" id="myBtn">Cart[0]</a></li>
-        <div class="global_logo" >
-          <img src="${path}/resources/img/icon_header_global_black.png" class="global_logo">
-        </div>
+        <div class="global_logo" ><img src="${path}/resources/img/icon_header_global_black.png" class="global_logo"></div>
         <li><a href="#">KR</a></li>
       </ul>
       </div>
@@ -56,27 +55,32 @@ response.setContentType("text/html; charset=UTF-8");
       <p>장바구니가 비어 있습니다.</p>
     </div>
     <div class="modal-footer">
-      <h3><a href="editemp/${emp.user_id}">VIEW ALL</a></h3>
+      <h3><a href="viewemp">VIEW ALL</a></h3>
     </div>
   </div>
   
-	<h1 class="cart-list-title">Cart List</h1>
-	<table class="cart-list">
-	<tr><th class="cart-th">아이디</th><th class="cart-th">상품번호</th><th class="cart-th">수량</th><th class="cart-th">수정</th><th class="cart-th">삭제</th></tr>
-	   <c:forEach var="emp" items="${list}"> 
-			<tr>
-			<td class="cart-list-td">${emp.user_id}</td>
-			<td class="cart-list-td">${emp.mag}</td>
-			<td class="cart-list-td">${emp.cnt}</td>
-			<td><a class="cart-td-link" href="editemp/${emp.user_id}">Edit</a></td>
-			<td><a class="cart-td-link" href="deleteemp/${emp.user_id}/${emp.mag}">Delete</a></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<br/>
-	<a class="cart-add" href="empform">Add to Cart</a>
-	
-	<footer id="footer">
+ 
+  <div class="mem-page">
+	  	<div class="mem-menu">
+	  		<div class="mem-name"><%=u.getName()%>님</div>
+	  		<div class="mem-submenu">회원 정보</div>
+	  		<a href="logout"><input type="button" class="logout-btn" value="로그아웃"></a><a href="deleteuser/<%=u.getId()%>"><input type="button" class="my-red-btn" value="회원탈퇴"></a>
+	  	</div>
+  	<form:form action="editusersave" method="POST"> 
+	  	<div class="mem-detail">
+	  		<div class="info-header">기본정보</div>
+			<div class="info">아이디 *<form:input id="info-id" class="info-input" name="id" path="id"/></div>
+			<div class="info">비밀번호 *<form:input id="info-pwd" class="info-input" type="password" name="password" path="password"/></div>
+			<div class="info">이름 *<form:input id="info-name" class="info-input" name="name" path="name"/></div>
+			<div class="info">전화번호<form:input id="info-phone" class="info-input" name="phonenumber" path="phonenumber"/></div>
+			<div class="info">이메일 *<form:input id="info-email" class="info-input" name="email" path="email"/></div>
+	  		<div class="mem-btn"><input type="submit" class="my-black-btn" value="회원정보수정"></div>
+	  	</div>
+  	</form:form>
+  </div>
+  
+  
+  <footer id="footer">
     <div class="footer">
       <div class="footer-logo">
         <img class="footer-width" src="${path}/resources/img/footer_logo.png">
@@ -116,8 +120,8 @@ response.setContentType("text/html; charset=UTF-8");
     </div>
   </footer>
 
-  <script type="text/javascript" src="${path}/resources/JS/slider.js"></script>
-  <script type="text/javascript" src="${path}/resources/JS/modal.js"></script>
+  <script type="text/javascript" src="JS/slider.js"></script>
+  <script type="text/javascript" src="JS/modal.js"></script>
 </body>
   
 </html>

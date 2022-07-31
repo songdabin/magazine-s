@@ -23,19 +23,23 @@
 	
 	<context:component-scan base-package="com.javatpoint" />
 	
-	<beans:bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">    
-	<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>   
-	<beans:property name="url" value="jdbc:mysql://walab.handong.edu:3306/camp2?useUnicode=true&amp;characterEncoding=utf-8"/>   
-	<beans:property name="username" value="camp2"/> 
-	<beans:property name="password" value="DqYAaFSdSQrTsDf0"/>  
-	</beans:bean>    
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- max upload size in bytes -->
+        <beans:property name="maxUploadSize" value="5242880" /> <!-- 5MB -->
+        <!-- max size of file in memory (in bytes) -->
+        <beans:property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+    </beans:bean>
 	
-	<beans:bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">    
-	<beans:property name="dataSource" ref="ds"/>   
-	</beans:bean>    
-	    
-	<beans:bean id="dao" class="com.javatpoint.dao.EmpDao">    
-	<beans:property name="template" ref="jt"/>
-	</beans:bean>   
+	<beans:bean id="LoginCheckInterceptor" class="com.javatpoint.interceptor.LoginCheckInterceptor">
+	</beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/resources/**" />
+			<exclude-mapping path="/*" />
+			<beans:ref bean="LoginCheckInterceptor" />
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

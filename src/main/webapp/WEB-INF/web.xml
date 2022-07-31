@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	xsi:schemaLocation="http://Java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
@@ -23,11 +23,30 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+		    <location>/Users/songdabin/Desktop/Web Service/file</location><!-- 업로드 파일 저장되는 기본 경로 -->
+		    <max-file-size>20971520</max-file-size> <!-- 한파일: 1mb * 20 -->
+		    <max-request-size>41943040</max-request-size> <!-- 한번에 여러개올리는데 전체가 40mb -->
+		    <file-size-threshold>20971520</file-size-threshold> <!-- 넘으면 temp에 넣고 업로드에 들어가지 않는다 : 20mb -->
+		 </multipart-config>
 	</servlet>
-		
+			
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<filter> 
+		<filter-name>encoding-filter</filter-name> 
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
+		<init-param> 
+			<param-name>encoding</param-name> 
+			<param-value>UTF-8</param-value> 
+		</init-param> 
+	</filter> 
+	<filter-mapping> 
+		<filter-name>encoding-filter</filter-name> 
+		<url-pattern>/*</url-pattern> 
+	</filter-mapping>
 
 </web-app>

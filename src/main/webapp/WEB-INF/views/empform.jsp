@@ -20,14 +20,14 @@ response.setContentType("text/html; charset=UTF-8");
 <body>
   <div class="header">
     <div class="logo">
-      <a href="${path}">
+      <a href="home">
         <img src="${path}/resources/img/header_logo.svg" class="logo">
       </a>
     </div>
     <div class="menu">
       <div class="left-menu">
       <ul>
-        <li><a href="#">New</a></li>
+        <li><a href="fileUploadPage">Image</a></li>
         <li><a href="#">Magazine</a></li>
         <li><a href="#">Books</a></li>
         <li><a href="${path}/resources/jquery.html">Forest</a></li>
@@ -35,8 +35,8 @@ response.setContentType("text/html; charset=UTF-8");
       </div>
       <div class="right-menu">
       <ul>
-        <li><a href="#">Search</a></li>
-        <li><a href="${path}/resources/login.jsp">Login</a></li>
+        <li><a href="login">My Page</a></li>
+        <li><a href="login">Login</a></li>
         <li><a href="#" id="myBtn">Cart[0]</a></li>
         <div class="global_logo" >
           <img src="${path}/resources/img/icon_header_global_black.png" class="global_logo">
@@ -116,15 +116,9 @@ response.setContentType("text/html; charset=UTF-8");
     </div>
 
     <div class="sub-info-wrapper">
-      <ul class="sub-info"><li class="name">© B Media Company</li>
-        <li>주소: 서울특별시 용산구 대사관로 35, 2층</li>
-        <li>회사명: 비미디어컴퍼니(주)</li>
-        <li>대표자: 김명수</li>
-        <li>사업자등록번호: 455-86-01601</li>
-        <li>통신판매업 신고번호: 제2020-서울용산-0129호</li>
-        <li class="agreement"><a href="#">개인정보처리방침</a></li>
-        <li class="agreement"><a href="#">이용약관</a></li>
-        <li class="by">site by <a href="https://ba-ton.kr/" target="_blank">BATON</a></li>
+      <ul class="sub-info"><li class="name">© songdabin</li>
+        <li>이 홈페이지는 magazine-b.co.kr의 연습용 클론코딩 사이트입니다.</li>
+        <li class="by">site by <a href="https://magazine-b.co.kr/" target="_blank">Magazine-B</a></li>
       </ul>
     </div>
   </footer>

@@ -1,121 +1,42 @@
 package com.javatpoint.dao;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.javatpoint.beans.User;
+
+@Repository
 public class UserDao {
-	public static Connection getConnection(){
-		Connection con=null;
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			final String USER = "songdabin"; 
-			final String PASS = "DqYAaFSdSQrTsDf0";
-			con=DriverManager.getConnection("jdbc:mysql://db4free.net:3306/magazine_b?characterEncoding=utf8", USER, PASS);
-		}catch(Exception e){System.out.println(e);}
-		return con;
+	@Autowired
+	SqlSession sqlSession;
+	
+	public int insertUser(User u){
+		int result = sqlSession.insert("User.insertUser", u);
+		return result;
 	}
 	
-	public static int save(User u){
-		int status=0;
-		try{
-			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("insert into sdb_register(name, id, password, email, phonenumber) values(?,?,?,?,?)");
-			ps.setString(1, u.getName());
-			ps.setString(2, u.getId());
-			ps.setString(3, u.getPassword());
-			ps.setString(4, u.getEmail());
-			ps.setString(5, u.getPhonenumber());
-			status=ps.executeUpdate();
-		}catch(Exception e){System.out.println(e);}
-		return status;
+	public int updateUser(User u){
+		int result = sqlSession.update("User.updateUser", u);
+		return result;
 	}
 	
-	public static int update(User u){
-		int status=0;
-		try{
-			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("update sdb_register set name=?, password=?, email=?, phonenumber=? where id=?");
-			ps.setString(1, u.getName());
-			ps.setString(2, u.getPassword());
-			ps.setString(3, u.getEmail());
-			ps.setString(4, u.getPhonenumber());
-			ps.setString(5, u.getId());
-			status=ps.executeUpdate();
-		}catch(Exception e){System.out.println(e);}
-		return status;
+	public int deleteUser(String id){
+		int result = sqlSession.delete("User.deleteUser", id);
+		return result;
 	}
 	
-	public static int delete(User u){
-		int status=0;
-		try{
-			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("delete from sdb_register where id=?");
-			ps.setString(1,u.getId());
-			status=ps.executeUpdate();
-		}catch(Exception e){System.out.println(e);}
-	
-		return status;
-	}
-	
-	public static List<User> getAllRecords(){
-		List<User> list=new ArrayList<User>();
-		
-		try{
-			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("select * from sdb_register");
-			ResultSet rs=ps.executeQuery();
-			while(rs.next()){
-				User u=new User();
-				u.setId(rs.getString("id"));
-				u.setName(rs.getString("name"));
-				u.setPassword(rs.getString("password"));
-				u.setEmail(rs.getString("email"));
-				list.add(u);
-			}
-		}catch(Exception e){System.out.println(e);}
-		return list;
-	}
-	
-	public static User getRecordById(String id){
-		User u=null;
-		try{
-			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("select * from sdb_register where id=?");
-			ps.setString(1,id);
-			ResultSet rs=ps.executeQuery();
-			while(rs.next()){
-				u=new User();
-				u.setId(rs.getString("id"));
-				u.setName(rs.getString("name"));
-				u.setPassword(rs.getString("password"));
-				u.setEmail(rs.getString("email"));
-				u.setPhonenumber(rs.getString("phonenumber"));
-			}
-		}catch(Exception e){System.out.println(e);}
+	public User getUserById(String id){
+		User u = sqlSession.selectOne("User.getUserById", id);
 		return u;
 	}
 	
-	public static boolean loginCheck(String id, String pwd) {
-		try {
-			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("select * from sdb_register where id = ? and password = ?");
-			ps.setString(1, id);
-			ps.setString(2, pwd);
-			ResultSet rs=ps.executeQuery();
-			if(rs.next()) {
-				return true;
-			}
-			else {
-				return false;
-			}
-			
-		} catch (SQLException e) {
-			System.out.println(e);
-		}
-		
-		return false;
+	public List<User> getAllRecords(){
+		List<User> list = sqlSession.selectList("User.getAllRecords");
+		return list;
+	}
+	
+	public User getUser(User u) {
+		return sqlSession.selectOne("User.getUser", u);
 	}
 }

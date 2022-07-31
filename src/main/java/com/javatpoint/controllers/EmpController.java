@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;  
 import org.springframework.web.bind.annotation.RequestMethod;   
 import com.javatpoint.beans.Emp;  
-import com.javatpoint.dao.EmpDao;  
+import com.javatpoint.service.EmpService;  
+
 @Controller  
 public class EmpController {  
     @Autowired  
-    EmpDao dao;//will inject dao from xml file  
+    EmpService empService; 
       
     /*It displays a form to input data, here "command" is a reserved request attribute 
      *which is used to display object data into form 
@@ -27,13 +28,13 @@ public class EmpController {
      *  because default request is GET*/  
     @RequestMapping(value="/save",method = RequestMethod.POST)  
     public String save(@ModelAttribute("emp") Emp emp){  
-        dao.save(emp);  
+        empService.insertEmp(emp);  
         return "redirect:/viewemp";//will redirect to viewemp request mapping  
     }  
     /* It provides list of employees in model object */  
     @RequestMapping("/viewemp")  
     public String viewemp(Model m){  
-        List<Emp> list=dao.getEmployees();  
+        List<Emp> list=empService.getEmployees();  
         m.addAttribute("list",list);
         return "viewemp";  
     }  
@@ -41,22 +42,22 @@ public class EmpController {
      * The @PathVariable puts URL data into variable.*/  
     @RequestMapping(value="/editemp/{user_id}")  
     public String edit(@PathVariable String user_id, Model m){  
-        Emp emp=dao.getEmpById(user_id);  
+        Emp emp=empService.getEmpById(user_id);  
         m.addAttribute("command",emp);
         return "empeditform";  
     }  
     /* It updates model object. */  
     @RequestMapping(value="/editsave",method = RequestMethod.POST)  
     public String editsave(@ModelAttribute("emp") Emp emp){  
-        dao.update(emp);  
-        System.out.println(emp.getCnt());
-        System.out.println(emp.getMag());
+        empService.updateEmp(emp);  
+//        System.out.println(emp.getCnt());
+//        System.out.println(emp.getMag());
         return "redirect:/viewemp";  
     }  
     /* It deletes record for the given id in URL and redirects to /viewemp */  
     @RequestMapping(value="/deleteemp/{user_id}/{mag}",method = RequestMethod.GET)  
     public String delete(@PathVariable String user_id, @PathVariable int mag){  
-        dao.delete(user_id, mag);  
+        empService.deleteEmp(user_id, mag);  
         return "redirect:/viewemp";  
     }   
 }  
